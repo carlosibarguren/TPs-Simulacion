@@ -261,4 +261,3 @@ def exportar_tabla_frecuencias_a_excel(tabla_frecuencias):
     root.clipboard_clear()
     root.clipboard_append(tabla_texto)
     messagebox.showinfo("Tabla copiada", "La tabla de frecuencias ha sido copiada al portapapeles. Puedes pegarla en Excel.")
-
