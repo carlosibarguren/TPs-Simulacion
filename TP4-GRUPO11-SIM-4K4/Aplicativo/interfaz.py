@@ -3,10 +3,11 @@ from tkinter import ttk
 from validaciones import validar_entradas
 from fila import crear_fila
 import random
+from utilidades import calcular_random_uniforme, generar_random_probabilidad, generar_random_uniforme
 
 def crear_interfaz():
 
-    global root, boton_mostrar, entry_prob_compra, entry_prob_repara, entry_prob_retira, entry_cliente_desde, entry_cliente_hasta, entry_venta_desde, entry_venta_hasta, entry_reparar_desde, entry_reparar_hasta, entry_prob_cafe, entry_demora_cafe, entry_tiempo_simular, entry_a, entry_b
+    global root, frame_resultados, entry_prob_compra, entry_prob_repara, entry_prob_retira, entry_cliente_desde, entry_cliente_hasta, entry_venta_desde, entry_venta_hasta, entry_reparar_desde, entry_reparar_hasta, entry_prob_cafe, entry_demora_cafe, entry_tiempo_simular, entry_a, entry_b
     root = tk.Tk()
     root.title("Simulación de Colas - Relojería B")
     
@@ -20,78 +21,78 @@ def crear_interfaz():
     tk.Label(root, text="Llegada del Cliente", font=("Arial", 11, "bold")).place(x=20, y=70)
 
     tk.Label(root, text="Tiempo Desde:").place(x=20, y=110)
-    entry_cliente_desde = tk.Entry(root, width=5)
+    entry_cliente_desde = tk.Entry(root, width=5, justify='center')
     entry_cliente_desde.insert(0, "13")
     entry_cliente_desde.place(x=120, y=110)
 
     tk.Label(root, text="Tiempo Hasta:").place(x=20, y=140)
-    entry_cliente_hasta = tk.Entry(root, width=5)
+    entry_cliente_hasta = tk.Entry(root, width=5, justify='center')
     entry_cliente_hasta.insert(0, "17")
     entry_cliente_hasta.place(x=120, y=140)
 
     tk.Label(root, text="Necesidad del Cliente", font=("Arial", 11, "bold")).place(x=210, y=60)
 
     tk.Label(root, text="Probabilidad Compra:").place(x=218, y=90)
-    entry_prob_compra = tk.Entry(root, width=5)
+    entry_prob_compra = tk.Entry(root, width=5, justify='center')
     entry_prob_compra.insert(0, "0.45")
     entry_prob_compra.place(x=350, y=90)
 
     tk.Label(root, text="Probabilidad Reparación:").place(x=200, y=120)
-    entry_prob_repara = tk.Entry(root, width=5)
+    entry_prob_repara = tk.Entry(root, width=5, justify='center')
     entry_prob_repara.insert(0, "0.25")
     entry_prob_repara.place(x=350, y=120)
 
     tk.Label(root, text="Probabilidad Retirar:").place(x=225, y=150)
-    entry_prob_retira = tk.Entry(root, width=5)
+    entry_prob_retira = tk.Entry(root, width=5, justify='center')
     entry_prob_retira.insert(0, "0.30")
     entry_prob_retira.place(x=350, y=150)
 
     tk.Label(root, text="Demora Venta", font=("Arial", 11, "bold")).place(x=435, y=70)
 
     tk.Label(root, text="Tiempo Desde:").place(x=420, y=110)
-    entry_venta_desde = tk.Entry(root, width=5)
+    entry_venta_desde = tk.Entry(root, width=5, justify='center')
     entry_venta_desde.insert(0, "6")
     entry_venta_desde.place(x=520, y=110)
 
     tk.Label(root, text="Tiempo Hasta:").place(x=420, y=140)
-    entry_venta_hasta = tk.Entry(root, width=5)
+    entry_venta_hasta = tk.Entry(root, width=5, justify='center')
     entry_venta_hasta.insert(0, "10")
     entry_venta_hasta.place(x=520, y=140)
 
     tk.Label(root, text="Demora Reparacion", font=("Arial", 11, "bold")).place(x=580, y=70)
 
     tk.Label(root, text="Tiempo Desde:").place(x=580, y=110)
-    entry_reparar_desde = tk.Entry(root, width=5)
+    entry_reparar_desde = tk.Entry(root, width=5, justify='center')
     entry_reparar_desde.insert(0, "6")
     entry_reparar_desde.place(x=680, y=110)
 
     tk.Label(root, text="Tiempo Hasta:").place(x=580, y=140)
-    entry_reparar_hasta = tk.Entry(root, width=5)
+    entry_reparar_hasta = tk.Entry(root, width=5, justify='center')
     entry_reparar_hasta.insert(0, "10")
     entry_reparar_hasta.place(x=680, y=140)
 
     tk.Label(root, text="Tomar Café", font=("Arial", 11, "bold")).place(x=750, y=70)
 
     tk.Label(root, text="Probabilidad:").place(x=740, y=110)
-    entry_prob_cafe = tk.Entry(root, width=5)
+    entry_prob_cafe = tk.Entry(root, width=5, justify='center')
     entry_prob_cafe.insert(0, "0.1")
     entry_prob_cafe.place(x=820, y=110)
 
     tk.Label(root, text="Demora:").place(x=765, y=140)
-    entry_demora_cafe = tk.Entry(root, width=5)
+    entry_demora_cafe = tk.Entry(root, width=5, justify='center')
     entry_demora_cafe.insert(0, "5")
     entry_demora_cafe.place(x=820, y=140)
 
     tk.Label(root, text="Tiempo a Simular (min):").place(x=890, y=75)
-    entry_tiempo_simular = tk.Entry(root, width=10)
+    entry_tiempo_simular = tk.Entry(root, width=10, justify='center')
     entry_tiempo_simular.place(x=1030, y=75)
 
     tk.Label(root, text="Mostrar desde:").place(x=920, y=120)
-    entry_a = tk.Entry(root, width=10)
+    entry_a = tk.Entry(root, width=10, justify='center')
     entry_a.place(x=1030, y=120)
 
     tk.Label(root, text="Mostrar hasta:").place(x=920, y=150)
-    entry_b = tk.Entry(root, width=10)
+    entry_b = tk.Entry(root, width=10, justify='center')
     entry_b.place(x=1030, y=150)
 
     boton_simular = tk.Button(root, text="Simular", command=lambda: simular(), bg="#1B2F45", fg="white", font=("Arial", 10, "bold"), width=10, height=2)
@@ -117,6 +118,10 @@ def crear_interfaz():
     frame_tabla = tk.Frame(canvas)
     canvas.create_window((0, 0), window=frame_tabla, anchor="nw")
 
+    #Crear Frame Resultados
+    frame_resultados = tk.Frame(root)
+    frame_resultados.place(x=180, y=630, width=1300, height=50)  # Ajusta la posición y tamaño del frame
+
     # Ejecutar la ventana
     root.mainloop()
 
@@ -126,8 +131,13 @@ def simular():
     # Crear ventana de carga
     ventana_carga = tk.Toplevel(root)
     ventana_carga.title("Cargando...")
-    ventana_carga.geometry("200x100")
-    tk.Label(ventana_carga, text="Simulación en proceso...").pack(pady=20)
+    ventana_carga.geometry("300x115")
+    ventana_carga.configure(bg="#546682")  
+    ventana_carga.overrideredirect(True)  # Eliminar barra de título
+    ventana_carga.geometry("+500+320")
+
+     # Etiqueta con texto blanco
+    tk.Label(ventana_carga, text="Cargando...", font=("Arial", 12), fg="white", bg="#546682").pack(expand=True)
     
     # Forzar la actualización de la interfaz gráfica para mostrar la ventana de carga
     ventana_carga.update()
@@ -160,6 +170,10 @@ def simular():
         for widget in frame_tabla.winfo_children():
             widget.destroy()
 
+        # Limpiar frame_resultados antes de agregar nuevos valores
+        for widget in frame_resultados.winfo_children():
+            widget.destroy()
+
         # Crear los encabezados de las columnas
         columnas_fijas = ["Reloj", "Evento", "Próximo Evento", "Random Llegada", "Tiempo entre Llegadas", "Próxima Llegada",
                           "Random Necesidad", "Necesidad Cliente", "Random Venta", "Tiempo Atención", "Fin Atención",
@@ -176,8 +190,8 @@ def simular():
         reloj = 0
         evento = "Inicio"
         proximo_evento = "Llegada Cliente"
-        random_llegada = round(random.random(), 4)
-        tiempo_entre_llegadas = round(random.uniform(tiempo_llegada_desde, tiempo_llegada_hasta),4)
+        random_llegada = generar_random_uniforme()
+        tiempo_entre_llegadas = calcular_random_uniforme(random_llegada, tiempo_llegada_desde, tiempo_llegada_hasta)
         proxima_llegada = 0 + tiempo_entre_llegadas
         random_necesidad = ""
         necesidad_cliente = ""
@@ -220,7 +234,6 @@ def simular():
         anterior_fin_cafe = fin_cafe
         anterior_proximo_evento = proximo_evento
         anterior_necesidad_cliente = necesidad_cliente
-        anterior_cola_ayudante = cola_ayudante
         anterior_cola_relojes_reparados = cola_relojes_reparados
         anterior_fin_atencion = fin_atencion
         anterior_fin_reparacion = fin_reparacion
@@ -237,8 +250,8 @@ def simular():
 
             # Solo generar el random_llegada si el evento actual es "Llegada Cliente"
             if evento == "Llegada Cliente":
-                random_llegada = round(random.random(),4)
-                tiempo_entre_llegadas = round(random.uniform(tiempo_llegada_desde, tiempo_llegada_hasta),4)
+                random_llegada = generar_random_uniforme()
+                tiempo_entre_llegadas = calcular_random_uniforme(random_llegada, tiempo_llegada_desde, tiempo_llegada_hasta)
                 proxima_llegada = reloj + tiempo_entre_llegadas
                 cola_ayudante += 1
                 clientes.append("EA")  # Se agrega un nuevo cliente esperando atención
@@ -247,9 +260,22 @@ def simular():
                 random_llegada = ""
                 tiempo_entre_llegadas = ""
                 proxima_llegada = anterior_proxima_llegada
-            
-            if (evento == "Llegada Cliente" and anterior_cola_ayudante == 0) or (evento == "Fin Atencion" and anterior_cola_ayudante > 0):
-                random_necesidad = round(random.random(), 4)
+
+            if evento == "Fin Atencion":
+                # Eliminar cliente atendido
+                clientes_atendidos += 1
+                clientes.pop(1)
+                clientes[0] += 1  # Incrementa el índice del primer cliente en el array
+                if anterior_necesidad_cliente == "Retira":
+                    if anterior_cola_relojes_reparados == 0:
+                        clientes_no_reparados += 1
+                    else:
+                        cola_relojes_reparados -= 1
+                elif anterior_necesidad_cliente == "Repara":
+                    cola_relojes_reparar += 1
+
+            if (evento == "Llegada Cliente" and len(clientes) == 2) or (evento == "Fin Atencion" and len(clientes) > 1):
+                random_necesidad = generar_random_probabilidad()
                 if random_necesidad < prob_compra:
                     necesidad_cliente = "Compra"
                 elif random_necesidad < prob_compra + prob_repara:
@@ -257,8 +283,8 @@ def simular():
                 else:
                     necesidad_cliente = "Retira"
                 if necesidad_cliente == "Compra":
-                    random_venta = round(random.random(), 4)
-                    tiempo_atencion = round(random.uniform(tiempo_venta_desde, tiempo_venta_hasta), 4)
+                    random_venta = generar_random_uniforme()
+                    tiempo_atencion = calcular_random_uniforme(random_venta, tiempo_venta_desde, tiempo_venta_hasta)
                 else:
                     random_venta = ""
                     tiempo_atencion = 3
@@ -272,21 +298,8 @@ def simular():
                 necesidad_cliente = ""
                 random_venta = ""
                 tiempo_atencion = ""
-                fin_atencion = ""
-                clientes_atendidos += 1
+                fin_atencion = ""             
                 ayudante_estado = "Libre"
-
-                # Eliminar cliente atendido
-                clientes.pop(1)
-                clientes[0] += 1  # Incrementa el índice del primer cliente en el array
-
-                if anterior_necesidad_cliente == "Retira":
-                    if anterior_cola_relojes_reparados == 0:
-                        clientes_no_reparados += 1
-                    else:
-                        cola_relojes_reparados -= 1
-                elif anterior_necesidad_cliente == "Repara":
-                    cola_relojes_reparar += 1
             else:
                 random_necesidad = ""
                 necesidad_cliente = anterior_necesidad_cliente
@@ -295,9 +308,10 @@ def simular():
                 fin_atencion = anterior_fin_atencion
 
             if evento == "Fin Reparacion":
+                cola_relojes_reparar -= 1
                 cola_relojes_reparados += 1
 
-                random_cafe = round(random.random(), 4)
+                random_cafe = generar_random_probabilidad()
 
                 if random_cafe < prob_cafe:
                     toma_cafe = "Si"
@@ -311,8 +325,8 @@ def simular():
                     fin_cafe = ""
 
                     if cola_relojes_reparar > 0:  # Si hay relojes en cola, empieza la reparación
-                        random_reparacion = round(random.random(), 4)
-                        tiempo_reparacion = round(random.uniform(tiempo_reparar_desde, tiempo_reparar_hasta), 4)
+                        random_reparacion = generar_random_uniforme()
+                        tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                         fin_reparacion = reloj + tiempo_reparacion
                         relojero_estado = "Ocupado"
                     else:  # Si no hay relojes en cola, el relojero queda libre
@@ -327,8 +341,8 @@ def simular():
                 fin_cafe = ""
                 
                 if cola_relojes_reparar > 0:  # Si hay relojes en cola, comienza una nueva reparación
-                    random_reparacion = round(random.random(), 4)
-                    tiempo_reparacion = round(random.uniform(tiempo_reparar_desde, tiempo_reparar_hasta), 4)
+                    random_reparacion = generar_random_uniforme()
+                    tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                     fin_reparacion = reloj + tiempo_reparacion
                     relojero_estado = "Ocupado"
                 else:  # Si no hay relojes en cola, el relojero queda libre
@@ -339,9 +353,9 @@ def simular():
 
             else:
                 # Mantener los valores de la fila anterior si no se trata de un evento relacionado con el relojero
-                if cola_relojes_reparar > 0 and anterior_fin_reparacion == "":
-                    random_reparacion = round(random.random(), 4)
-                    tiempo_reparacion = round(random.uniform(tiempo_reparar_desde, tiempo_reparar_hasta), 4)
+                if cola_relojes_reparar > 0 and anterior_fin_reparacion == "" and anterior_fin_cafe == "":
+                    random_reparacion = generar_random_uniforme()
+                    tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                     fin_reparacion = reloj + tiempo_reparacion
                     relojero_estado = "Ocupado"
                 else:
@@ -351,7 +365,7 @@ def simular():
                     random_reparacion = ""
                     tiempo_reparacion = ""
                     fin_reparacion = anterior_fin_reparacion
-
+            
             if evento == "Fin Atencion":
                 tiempo_ocupado_ayudante += reloj - anterior_reloj
             elif fin_atencion != "" and random_necesidad == "":
@@ -390,7 +404,6 @@ def simular():
             anterior_fin_cafe = fin_cafe
             anterior_proximo_evento = proximo_evento
             anterior_necesidad_cliente = necesidad_cliente
-            anterior_cola_ayudante = cola_ayudante
             anterior_cola_relojes_reparados = cola_relojes_reparados
 
             if tiempo_tabla_desde <= reloj <= tiempo_tabla_hasta:
@@ -409,9 +422,21 @@ def simular():
         # Cerrar la ventana de carga una vez que la simulación haya terminado
         ventana_carga.destroy()
 
-    tk.Label(frame_tabla, text="Tomar Café", font=("Arial", 11, "bold")).place(x=750, y=70)
-    
-    return clientes_atendidos, clientes_no_reparados, tiempo_ocupado_ayudante, tiempo_ocupado_relojero, reloj
+    resultado_probabilidad = round((clientes_no_reparados/clientes_atendidos), 4)
+
+    # Mostrar el resultado en frame_resultados
+    tk.Label(frame_resultados, text="Probabilidad del Cliente de Reloj No Reparado:", font=("Arial", 11)).grid(row=0, column=0, sticky="w")
+    tk.Label(frame_resultados, text=str(resultado_probabilidad), font=("Arial", 11, "bold")).grid(row=0, column=1, sticky="w")
+
+    resultado_ayudante = round((tiempo_ocupado_ayudante*100)/reloj,4)
+    tk.Label(frame_resultados, text="                 Porcentaje Ayudante Ocupado:", font=("Arial", 11)).grid(row=0, column=2, sticky="w")
+    tk.Label(frame_resultados, text=str(resultado_ayudante)+" %", font=("Arial", 11, "bold")).grid(row=0, column=3, sticky="w")
+
+    resultado_relojero = round((tiempo_ocupado_relojero*100)/reloj,4)
+    tk.Label(frame_resultados, text="                 Porcentaje Relojero Ocupado", font=("Arial", 11)).grid(row=0, column=4, sticky="w")
+    tk.Label(frame_resultados, text=str(resultado_relojero)+" %", font=("Arial", 11, "bold")).grid(row=0, column=5, sticky="w")
+
+    return 
 
 def crear_fila_en_tabla(fila):
     columnas_fijas = ["reloj", "evento", "proximo_evento", "random_llegada", "tiempo_entre_llegadas", "proxima_llegada",
@@ -450,8 +475,3 @@ def crear_fila_en_tabla(fila):
     # Ajustar el canvas
     frame_tabla.update_idletasks()
     canvas.config(scrollregion=canvas.bbox("all"))
-
-
-
-if __name__ == "__main__":
-    crear_interfaz()
