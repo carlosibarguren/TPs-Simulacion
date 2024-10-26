@@ -308,7 +308,6 @@ def simular():
                 fin_atencion = anterior_fin_atencion
 
             if evento == "Fin Reparacion":
-                cola_relojes_reparar -= 1
                 cola_relojes_reparados += 1
 
                 random_cafe = generar_random_probabilidad()
@@ -329,6 +328,7 @@ def simular():
                         tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                         fin_reparacion = reloj + tiempo_reparacion
                         relojero_estado = "Ocupado"
+                        cola_relojes_reparar -= 1
                     else:  # Si no hay relojes en cola, el relojero queda libre
                         random_reparacion = ""
                         tiempo_reparacion = ""
@@ -345,6 +345,7 @@ def simular():
                     tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                     fin_reparacion = reloj + tiempo_reparacion
                     relojero_estado = "Ocupado"
+                    cola_relojes_reparar -= 1
                 else:  # Si no hay relojes en cola, el relojero queda libre
                     random_reparacion = ""
                     tiempo_reparacion = ""
@@ -358,6 +359,7 @@ def simular():
                     tiempo_reparacion = calcular_random_uniforme(random_reparacion, tiempo_reparar_desde, tiempo_reparar_hasta)
                     fin_reparacion = reloj + tiempo_reparacion
                     relojero_estado = "Ocupado"
+                    cola_relojes_reparar -= 1
                 else:
                     random_cafe = ""
                     toma_cafe = ""
@@ -436,7 +438,6 @@ def simular():
     tk.Label(frame_resultados, text="                 Porcentaje Relojero Ocupado", font=("Arial", 11)).grid(row=0, column=4, sticky="w")
     tk.Label(frame_resultados, text=str(resultado_relojero)+" %", font=("Arial", 11, "bold")).grid(row=0, column=5, sticky="w")
 
-    return 
 
 def crear_fila_en_tabla(fila):
     columnas_fijas = ["reloj", "evento", "proximo_evento", "random_llegada", "tiempo_entre_llegadas", "proxima_llegada",
